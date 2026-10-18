@@ -1,0 +1,54 @@
+{
+  "$schema": "../config/rin.schema.json",
+  "timezone": "Asia/Shanghai",
+  "character": {
+    "name": "Rin",
+    "self_style": "本天才",
+    "language": "zh-CN"
+  },
+  "users": {
+    "owner": {
+      "name": "你",
+      "title": "你",
+      "mode": "sunny",
+      "can_read_private": true
+    },
+    "partner": {
+      "enabled": false,
+      "name": "TA",
+      "title": "TA",
+      "mode": "sharp",
+      "can_read_private": false
+    }
+  },
+  "relationship": {
+    "label": "自己",
+    "shared_notes": false
+  },
+  "state": {
+    "mood": { "min": -5, "max": 5, "decay_per_hour": 0.2 },
+    "energy": {
+      "min": 0,
+      "max": 10,
+      "regen_per_hour": 0.3,
+      "turn_cost": 0.1,
+      "night_drain": 0.3
+    },
+    "affinity": { "min": 0, "max": 100, "per_note": 0.5, "per_praise": 1 }
+  },
+  "privacy": {
+    "default_visibility": "self",
+    "group_is_public": true
+  },
+  "runtime": {
+    "base_url": "https://api.deepseek.com/v1",
+    "model": "deepseek-chat",
+    "api_key_env": "RIN_API_KEY",
+    "api_key": "",
+    "temperature": 1.0,
+    "max_tokens": 800,
+    "history_limit": 20,
+    "use_tools": true,
+    "db_path": "data/rin.db"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rin agent preset config",
+  "type": "object",
+  "required": ["character", "users", "runtime"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA 时区，例如 Asia/Shanghai"
+    },
+    "character": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "角色名，默认 Rin"
+        },
+        "self_style": {
+          "type": "string",
+          "description": "晴天模式里的自称，默认「本天才」"
+        },
+        "language": {
+          "type": "string",
+          "description": "人设语言，默认 zh-CN"
+        }
+      }
+    },
+    "users": {
+      "type": "object",
+      "required": ["owner"],
+      "properties": {
+        "owner": {
+          "$ref": "#/definitions/user"
+        },
+        "partner": {
+          "allOf": [
+            { "$ref": "#/definitions/user" },
+            {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "shared_notes": { "type": "boolean" }
+      }
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "mood": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "decay_per_hour": { "type": "number" }
+          }
+        },
+        "energy": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "regen_per_hour": { "type": "number" },
+            "turn_cost": { "type": "number" },
+            "night_drain": { "type": "number" }
+          }
+        },
+        "affinity": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "per_note": { "type": "number" },
+            "per_praise": { "type": "number" }
+          }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "properties": {
+        "default_visibility": {
+          "type": "string",
+          "enum": ["self", "shared"]
+        },
+        "group_is_public": { "type": "boolean" }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": ["base_url", "model"],
+      "properties": {
+        "base_url": {
+          "type": "string",
+          "description": "OpenAI 兼容 API 的 base URL，例如 https://api.deepseek.com/v1"
+        },
+        "model": { "type": "string" },
+        "api_key_env": {
+          "type": "string",
+          "description": "存放 API key 的环境变量名"
+        },
+        "api_key": {
+          "type": "string",
+          "description": "不推荐；优先用环境变量"
+        },
+        "temperature": { "type": "number" },
+        "max_tokens": { "type": "integer" },
+        "history_limit": { "type": "integer" },
+        "use_tools": { "type": "boolean" },
+        "db_path": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "required": ["name", "mode"],
+      "properties": {
+        "name": { "type": "string" },
+        "title": {
+          "type": "string",
+          "description": "Rin 对 TA 的称呼"
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["sunny", "sharp"]
+        },
+        "can_read_private": { "type": "boolean" }
+      }
+    }
+  }
+}
